@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NCPOR PolarConnect — Integrated Polar Science Portal | SIH 2026</title>
+  <meta name="description" content="India's integrated polar science outreach, knowledge repository and media dissemination portal. Explore Arctic and Antarctic research from NCPOR." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Favicon (emoji shortcut) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧊</text></svg>" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- NAVIGATION                                                               -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar-inner">
+      <!-- Logo -->
+      <a class="logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        <div class="logo-icon">🧊</div>
+        <div class="logo-text">
+          <div class="logo-title">NCPOR PolarConnect</div>
+          <div class="logo-sub">Ministry of Earth Sciences · SIH 2026</div>
+        </div>
+      </a>
+
+      <!-- Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#repository" data-section="repository" onclick="scrollToSection('repository');return false;">Repository</a></li>
+        <li><a href="#ai-generator" data-section="ai-generator" onclick="scrollToSection('ai-generator');return false;">AI Outreach</a></li>
+        <li><a href="#gallery" data-section="gallery" onclick="scrollToSection('gallery');return false;">Gallery</a></li>
+        <li><a href="#events" data-section="events" onclick="scrollToSection('events');return false;">Events</a></li>
+        <li><a href="http://localhost:8000/docs" target="_blank">API Docs</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-right">
+        <button class="btn btn-outline btn-sm" onclick="scrollToSection('ai-generator')">✨ AI Outreach</button>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal()">📤 Submit Data</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- HERO SECTION                                                             -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="polar-grid"></div>
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-content">
+
+      <div class="hero-badge">
+        <span>🇮🇳</span>
+        <span>SIH 2026 · Problem Statement ID 26063 · NCPOR, MoES</span>
+      </div>
+
+      <h1 class="hero-title">
+        Exploring the <span>Ends of the Earth</span>:<br />
+        Integrated Polar Science Portal
+      </h1>
+
+      <p class="hero-subtitle">
+        India's unified gateway for Arctic and Antarctic science — bridging field research, open datasets,
+        publications, and public outreach from Maitri, Bharati, and Himadri polar stations.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" onclick="scrollToSection('repository')">
+          🔍 Explore Repository
+        </button>
+        <button class="btn btn-outline btn-lg" onclick="scrollToSection('ai-generator')">
+          ✨ Try AI Outreach Engine
+        </button>
+      </div>
+
+      <!-- Live Station Badges -->
+      <div class="station-badges">
+        <div class="station-badge">
+          <div class="dot"></div>
+          <span>🏔️ Maitri Station</span>
+          <span style="color:var(--cyan);font-size:0.7rem">Queen Maud Land, Antarctica</span>
+        </div>
+        <div class="station-badge">
+          <div class="dot"></div>
+          <span>🔬 Bharati Station</span>
+          <span style="color:var(--cyan);font-size:0.7rem">Larsemann Hills, East Antarctica</span>
+        </div>
+        <div class="station-badge">
+          <div class="dot"></div>
+          <span>🏔️ Himadri Station</span>
+          <span style="color:var(--cyan);font-size:0.7rem">Ny-Ålesund, Svalbard, Arctic</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- STATS BAR                                                                -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid" id="statsGrid">
+      <!-- Populated dynamically via loadStats() -->
+      <div class="loading-spinner" style="grid-column:1/-1;flex-direction:row;padding:0.5rem">
+        <div class="spinner"></div>
+        <span class="text-sm text-muted">Loading portal statistics…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- KNOWLEDGE REPOSITORY                                                     -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="repository">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">📚 Knowledge Repository</div>
+      <h2 class="section-title">Polar Science Archive</h2>
+      <p class="section-subtitle">
+        Open-access collection of expedition reports, scientific datasets, peer-reviewed
+        publications and media from India's polar research programme.
+      </p>
+    </div>
+
+    <!-- Filter Row -->
+    <div class="filter-row">
+      <div class="search-wrapper">
+        <span class="icon">🔍</span>
+        <input
+          class="search-input"
+          id="searchInput"
+          type="search"
+          placeholder="Search by title, author, tags, or description…"
+          oninput="onSearch(this.value)"
+          autocomplete="off"
+        />
+      </div>
+      <div class="filter-chips">
+        <button class="chip active" data-cat="All"                onclick="setCategory('All')">All</button>
+        <button class="chip" data-cat="Expedition Reports"        onclick="setCategory('Expedition Reports')">🏔️ Expeditions</button>
+        <button class="chip" data-cat="Datasets"                  onclick="setCategory('Datasets')">💾 Datasets</button>
+        <button class="chip" data-cat="Publications"              onclick="setCategory('Publications')">📄 Publications</button>
+        <button class="chip" data-cat="Media"                     onclick="setCategory('Media')">🎬 Media</button>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="openUploadModal()" style="flex-shrink:0">
+        📤 Upload Dataset
+      </button>
+    </div>
+
+    <!-- Repository Card Grid -->
+    <div class="repo-grid" id="repoGrid">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- AI OUTREACH ENGINE                                                       -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section ai-section" id="ai-generator">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">✨ AI-Powered</div>
+      <h2 class="section-title">NCPOR AI Outreach Engine</h2>
+      <p class="section-subtitle">
+        Instantly generate platform-optimised social media posts, LinkedIn articles, and press releases
+        for any polar research topic — with auto-generated hashtags and NCPOR branding.
+      </p>
+    </div>
+
+    <div class="ai-widget">
+      <!-- AI Header -->
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,#0284C7,#38BDF8);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">✨</div>
+        <div>
+          <div style="font-weight:700;color:var(--ice-white)">AI Content Generator</div>
+          <div class="text-xs text-muted">Tailored science communication for multiple platforms and audiences</div>
+        </div>
+        <div id="aiStatusBadge" style="margin-left:auto;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);color:#FCD34D;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.7rem;font-weight:700">
+          CHECKING
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="ai-form-grid">
+        <div class="form-group">
+          <label class="form-label" for="aiTopic">Research Topic *</label>
+          <input
+            class="form-control"
+            id="aiTopic"
+            type="text"
+            placeholder="e.g., Microplastic analysis at Bharati Station, 2024"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="aiPlatform">Platform</label>
+          <select class="form-control" id="aiPlatform">
+            <option value="LinkedIn">💼 LinkedIn</option>
+            <option value="X/Twitter">🐦 X / Twitter</option>
+            <option value="Press Release">📰 Press Release</option>
+            <option value="Website">🌐 Website</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="aiTone">Tone</label>
+          <select class="form-control" id="aiTone">
+            <option value="Scientific">🔬 Scientific</option>
+            <option value="Public Awareness">🌊 Public Awareness</option>
+            <option value="Educational">📚 Educational</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Optional user-selected research topics -->
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem">
+        <span class="text-xs text-muted" style="align-self:center;white-space:nowrap">Quick topics:</span>
+        <button class="chip" style="font-size:0.72rem;padding:0.25rem 0.75rem" onclick="document.getElementById('aiTopic').value='Antarctic ice sheet mass balance 2024'">🧊 Ice Sheet Mass Balance</button>
+        <button class="chip" style="font-size:0.72rem;padding:0.25rem 0.75rem" onclick="document.getElementById('aiTopic').value='Black carbon deposition at Himadri Arctic station'">🏔️ Arctic Black Carbon</button>
+        <button class="chip" style="font-size:0.72rem;padding:0.25rem 0.75rem" onclick="document.getElementById('aiTopic').value='Phytoplankton blooms in Prydz Bay Southern Ocean'">🌊 Prydz Bay Blooms</button>
+        <button class="chip" style="font-size:0.72rem;padding:0.25rem 0.75rem" onclick="document.getElementById('aiTopic').value='India 44th Antarctic Expedition 2026 departure'">🚢 44th Expedition</button>
+        <button class="chip" style="font-size:0.72rem;padding:0.25rem 0.75rem" onclick="document.getElementById('aiTopic').value='Arctic sea ice minimum record broken in 2024'">📉 Sea Ice Record</button>
+      </div>
+
+      <button class="btn btn-primary" id="generateBtn" onclick="generateContent()">
+        ✨ Generate Media Post
+      </button>
+
+      <!-- AI Output -->
+      <div id="aiOutput" class="hidden"></div>
+    </div>
+
+    <!-- Platform comparison cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem">
+      <div class="card" style="text-align:center;padding:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🐦</div>
+        <div style="font-weight:700;color:var(--ice-white);margin-bottom:0.25rem">X / Twitter</div>
+        <div class="text-xs text-muted">280 char limit · Hashtag-optimised · High-frequency posting</div>
+      </div>
+      <div class="card" style="text-align:center;padding:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">💼</div>
+        <div style="font-weight:700;color:var(--ice-white);margin-bottom:0.25rem">LinkedIn</div>
+        <div class="text-xs text-muted">Professional network · Research community reach · Article format</div>
+      </div>
+      <div class="card" style="text-align:center;padding:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.5rem">📰</div>
+        <div style="font-weight:700;color:var(--ice-white);margin-bottom:0.25rem">Press Release</div>
+        <div class="text-xs text-muted">Formal format · Media-ready · Ministry of Earth Sciences branding</div>
+      </div>
+    </div>
+
+    <div class="ai-widget" id="polar-ai" style="margin-top:2rem">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+        <div style="font-size:1.5rem">🧠</div>
+        <div><div style="font-weight:700;color:var(--ice-white)">PolarAI · Repository answers</div>
+          <div class="text-xs text-muted">Answers are grounded in matching PolarConnect repository records.</div></div>
+      </div>
+      <div id="polarChatMessages" class="chat-messages" role="log" aria-live="polite">
+        <div class="text-sm text-muted">Ask about research, stations, expeditions, datasets, or uploaded PDFs in the repository.</div>
+      </div>
+      <div style="display:flex;gap:0.75rem;margin-top:1rem;align-items:flex-end">
+        <textarea class="form-control" id="polarChatInput" rows="2" placeholder="Ask a question about the repository…" aria-label="Ask PolarAI"></textarea>
+        <button class="btn btn-primary" id="polarChatSend" onclick="sendPolarMessage()">Ask</button>
+      </div>
+    </div>
+
+    <div class="ai-widget" id="student-learning" style="margin-top:1.5rem">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+        <div style="font-size:1.5rem">🎓</div>
+        <div><div style="font-weight:700;color:var(--ice-white)">Student Learning & Quiz</div>
+          <div class="text-xs text-muted">Practice with questions generated from repository research.</div></div>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:flex-end">
+        <div class="form-group" style="flex:1;min-width:220px">
+          <label class="form-label" for="quizTopic">Research topic</label>
+          <input class="form-control" id="quizTopic" placeholder="e.g., Maitri ice core research" />
+        </div>
+        <div class="form-group" style="width:130px">
+          <label class="form-label" for="quizCount">Questions</label>
+          <select class="form-control" id="quizCount"><option>5</option><option>3</option><option>10</option></select>
+        </div>
+        <button class="btn btn-primary" id="quizStartBtn" onclick="startQuiz()">Generate quiz</button>
+      </div>
+      <div id="quizOutput" class="hidden" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- EXPEDITION GALLERY                                                       -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">📸 Visual Archive</div>
+      <h2 class="section-title">Expedition Gallery</h2>
+      <p class="section-subtitle">
+        A visual journey through India's polar research missions — from the ice cores of Maitri
+        to the Arctic tundra of Svalbard.
+      </p>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Populated via renderGallery() in app.js -->
+    </div>
+
+    <div style="text-align:center;margin-top:2rem">
+      <button class="btn btn-outline" onclick="setCategory('Media');scrollToSection('repository')">
+        🎬 View Full Media Repository →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- ABOUT STATIONS                                                           -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">🗺️ Field Stations</div>
+      <h2 class="section-title">India's Polar Research Network</h2>
+    </div>
+    <div class="card polar-map-card" id="polar-map">
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+        <div><div style="font-weight:700;color:var(--ice-white)">Interactive polar map</div>
+          <div class="text-xs text-muted">Polar-coordinate view using the station coordinates shown below.</div></div>
+        <div style="display:flex;gap:0.5rem;margin-left:auto">
+          <button class="chip active" id="southMapBtn" onclick="setPolarHemisphere('south')">Antarctic</button>
+          <button class="chip" id="northMapBtn" onclick="setPolarHemisphere('north')">Arctic</button>
+        </div>
+      </div>
+      <svg id="polarMapSvg" class="polar-map-svg" viewBox="0 0 600 400" role="img" aria-label="Interactive polar map"></svg>
+      <div id="polarMapDetails" class="polar-map-details text-sm" aria-live="polite"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem">
+
+      <!-- Maitri -->
+      <div class="card" style="background:linear-gradient(135deg,var(--slate) 0%,rgba(2,132,199,0.08) 100%)">
+        <div style="font-size:2.5rem;margin-bottom:1rem">🏔️</div>
+        <div style="font-weight:700;color:var(--ice-white);font-size:1.1rem;margin-bottom:0.25rem">Maitri Station</div>
+        <div class="text-xs text-muted" style="margin-bottom:0.75rem">Schirmacher Oasis, Queen Maud Land, Antarctica</div>
+        <p class="text-sm" style="margin-bottom:0.75rem">India's second Antarctic station (est. 1989), operational year-round. Hub for glaciology, geology, atmospheric science, and remote sensing research.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.75rem">
+          <div><span class="text-muted">Lat/Lon</span><br/><strong>70°45'S, 11°44'E</strong></div>
+          <div><span class="text-muted">Elevation</span><br/><strong>~117 m ASL</strong></div>
+          <div><span class="text-muted">Established</span><br/><strong>1989</strong></div>
+          <div><span class="text-muted">Winter Crew</span><br/><strong>~25 personnel</strong></div>
+        </div>
+      </div>
+
+      <!-- Bharati -->
+      <div class="card" style="background:linear-gradient(135deg,var(--slate) 0%,rgba(2,132,199,0.08) 100%)">
+        <div style="font-size:2.5rem;margin-bottom:1rem">🔬</div>
+        <div style="font-weight:700;color:var(--ice-white);font-size:1.1rem;margin-bottom:0.25rem">Bharati Station</div>
+        <div class="text-xs text-muted" style="margin-bottom:0.75rem">Larsemann Hills, East Antarctica</div>
+        <p class="text-sm" style="margin-bottom:0.75rem">India's modern, sustainable Antarctic station (est. 2012). Focuses on marine science, biology, oceanography, and atmospheric studies with international partnerships.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.75rem">
+          <div><span class="text-muted">Lat/Lon</span><br/><strong>69°24'S, 76°11'E</strong></div>
+          <div><span class="text-muted">Status</span><br/><strong>Fully operational</strong></div>
+          <div><span class="text-muted">Established</span><br/><strong>2012</strong></div>
+          <div><span class="text-muted">Focus</span><br/><strong>Marine & Ocean</strong></div>
+        </div>
+      </div>
+
+      <!-- Himadri -->
+      <div class="card" style="background:linear-gradient(135deg,var(--slate) 0%,rgba(15,118,110,0.1) 100%)">
+        <div style="font-size:2.5rem;margin-bottom:1rem">🧭</div>
+        <div style="font-weight:700;color:var(--ice-white);font-size:1.1rem;margin-bottom:0.25rem">Himadri Station</div>
+        <div class="text-xs text-muted" style="margin-bottom:0.75rem">Ny-Ålesund, Svalbard, Norway (Arctic)</div>
+        <p class="text-sm" style="margin-bottom:0.75rem">India's only Arctic research station (est. 2008), co-located with 11 other nations in the world's northernmost research settlement. Studies Arctic amplification and glaciology.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.75rem">
+          <div><span class="text-muted">Lat/Lon</span><br/><strong>78°55'N, 11°56'E</strong></div>
+          <div><span class="text-muted">Season</span><br/><strong>Summer (Apr–Oct)</strong></div>
+          <div><span class="text-muted">Established</span><br/><strong>2008</strong></div>
+          <div><span class="text-muted">Partner</span><br/><strong>Kings Bay AS</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- EVENTS & TIMELINE                                                        -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<section class="section" style="background:rgba(30,41,59,0.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)" id="events">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem">
+
+      <!-- Events List -->
+      <div>
+        <div class="section-header" style="text-align:left;margin-bottom:1.5rem">
+          <div class="section-tag">📅 Upcoming</div>
+          <h2 class="section-title">NCPOR Events & Expeditions</h2>
+          <p>Conferences, webinars, workshops, and public outreach events.</p>
+        </div>
+        <div class="events-list" id="eventsList">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Quick Stats + Links -->
+      <div>
+        <div class="section-header" style="text-align:left;margin-bottom:1.5rem">
+          <div class="section-tag">🔗 Quick Links</div>
+          <h2 class="section-title">Resources & Partners</h2>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:0.75rem">
+          <a href="https://ncpor.res.in" target="_blank" class="card" style="text-decoration:none;padding:1rem;display:flex;align-items:center;gap:0.75rem;transition:all 0.25s">
+            <span style="font-size:1.5rem">🌐</span>
+            <div>
+              <div style="font-weight:600;color:var(--ice-white);font-size:0.875rem">NCPOR Official Website</div>
+              <div class="text-xs text-muted">ncpor.res.in</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-muted)">→</span>
+          </a>
+
+          <a href="https://moes.gov.in" target="_blank" class="card" style="text-decoration:none;padding:1rem;display:flex;align-items:center;gap:0.75rem;transition:all 0.25s">
+            <span style="font-size:1.5rem">🏛️</span>
+            <div>
+              <div style="font-weight:600;color:var(--ice-white);font-size:0.875rem">Ministry of Earth Sciences</div>
+              <div class="text-xs text-muted">moes.gov.in</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-muted)">→</span>
+          </a>
+
+          <a href="http://localhost:8000/docs" target="_blank" class="card" style="text-decoration:none;padding:1rem;display:flex;align-items:center;gap:0.75rem;transition:all 0.25s">
+            <span style="font-size:1.5rem">⚡</span>
+            <div>
+              <div style="font-weight:600;color:var(--ice-white);font-size:0.875rem">PolarConnect REST API</div>
+              <div class="text-xs text-muted">Interactive API documentation (Swagger UI)</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-muted)">→</span>
+          </a>
+
+          <a href="https://www.scar.org" target="_blank" class="card" style="text-decoration:none;padding:1rem;display:flex;align-items:center;gap:0.75rem;transition:all 0.25s">
+            <span style="font-size:1.5rem">🌍</span>
+            <div>
+              <div style="font-weight:600;color:var(--ice-white);font-size:0.875rem">Scientific Committee on Antarctic Research</div>
+              <div class="text-xs text-muted">scar.org · International partner</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-muted)">→</span>
+          </a>
+
+          <a href="https://www.iarc.uaf.edu" target="_blank" class="card" style="text-decoration:none;padding:1rem;display:flex;align-items:center;gap:0.75rem;transition:all 0.25s">
+            <span style="font-size:1.5rem">🏔️</span>
+            <div>
+              <div style="font-weight:600;color:var(--ice-white);font-size:0.875rem">International Arctic Research Center</div>
+              <div class="text-xs text-muted">iarc.uaf.edu · Arctic collaboration</div>
+            </div>
+            <span style="margin-left:auto;color:var(--text-muted)">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                                   -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#0284C7,#38BDF8);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">🧊</div>
+          <div style="font-weight:700;color:var(--ice-white)">NCPOR PolarConnect</div>
+        </div>
+        <p class="text-sm" style="margin-bottom:0.75rem">
+          Integrated Polar Science Outreach, Knowledge Repository & Media Dissemination Portal.
+          Built for SIH 2026 — Problem Statement ID 26063.
+        </p>
+        <div class="text-xs text-muted">
+          National Centre for Polar and Ocean Research<br/>
+          Ministry of Earth Sciences, Government of India<br/>
+          Headland Sada, Vasco-da-Gama, Goa – 403 804
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Repository</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="setCategory('Expedition Reports');scrollToSection('repository');return false;">Expedition Reports</a></li>
+          <li><a href="#" onclick="setCategory('Datasets');scrollToSection('repository');return false;">Scientific Datasets</a></li>
+          <li><a href="#" onclick="setCategory('Publications');scrollToSection('repository');return false;">Publications</a></li>
+          <li><a href="#" onclick="setCategory('Media');scrollToSection('repository');return false;">Media Archive</a></li>
+          <li><a href="#" onclick="openUploadModal();return false;">Submit Your Data</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Tools</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="scrollToSection('ai-generator');return false;">AI Outreach Engine</a></li>
+          <li><a href="http://localhost:8000/docs" target="_blank">API Documentation</a></li>
+          <li><a href="http://localhost:8000/api/stats" target="_blank">Live API Stats</a></li>
+          <li><a href="#" onclick="scrollToSection('gallery');return false;">Photo Gallery</a></li>
+          <li><a href="#" onclick="scrollToSection('events');return false;">Events Calendar</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Polar Stations</div>
+        <ul class="footer-links">
+          <li><a href="#">🏔️ Maitri (Antarctica)</a></li>
+          <li><a href="#">🔬 Bharati (Antarctica)</a></li>
+          <li><a href="#">🧭 Himadri (Arctic)</a></li>
+          <li><a href="https://ncpor.res.in" target="_blank">NCPOR Homepage</a></li>
+          <li><a href="mailto:outreach@ncpor.res.in">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 NCPOR PolarConnect · SIH Problem Statement 26063 · Ministry of Earth Sciences</span>
+      <div style="display:flex;gap:1rem">
+        <span>Built with FastAPI + SQLite + Vanilla JS</span>
+        <span style="color:var(--cyan)">🧊 Polar Science for Everyone</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
